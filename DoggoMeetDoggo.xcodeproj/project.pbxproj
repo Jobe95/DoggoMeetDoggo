@@ -12,9 +12,21 @@
 		5CB875B8225E1B5200B27569 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5CB875B6225E1B5200B27569 /* Main.storyboard */; };
 		5CB875BA225E1B5700B27569 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5CB875B9225E1B5700B27569 /* Assets.xcassets */; };
 		5CB875BD225E1B5700B27569 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5CB875BB225E1B5700B27569 /* LaunchScreen.storyboard */; };
+		5CB875C8225E22BE00B27569 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB875C7225E22BE00B27569 /* LoginViewController.swift */; };
+		5CB875CA225E22C900B27569 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB875C9225E22C900B27569 /* RegisterViewController.swift */; };
+		5CB875CC225E248100B27569 /* SlideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB875CB225E248100B27569 /* SlideViewController.swift */; };
+		5CB875CE225E250A00B27569 /* SlideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB875CD225E250A00B27569 /* SlideView.swift */; };
+		5CB875D0225E251C00B27569 /* Slide.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5CB875CF225E251C00B27569 /* Slide.xib */; };
+		5CB875D2225E31E600B27569 /* UsersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB875D1225E31E600B27569 /* UsersTableViewController.swift */; };
+		5CB875D4225E31F900B27569 /* UsersTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB875D3225E31F900B27569 /* UsersTableViewCell.swift */; };
+		5CB875D8225E415E00B27569 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB875D7225E415E00B27569 /* MainViewController.swift */; };
+		5CB875DA225E44BB00B27569 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB875D9225E44BB00B27569 /* ProfileViewController.swift */; };
+		5CB875FE225F62D500B27569 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5CB875FD225F62D500B27569 /* GoogleService-Info.plist */; };
+		5FC7FB51C9F85E6E6C76EA4E /* Pods_DoggoMeetDoggo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89422D8FFD8AEBF27D36B040 /* Pods_DoggoMeetDoggo.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4B55C47C364325C109B84031 /* Pods-DoggoMeetDoggo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DoggoMeetDoggo.debug.xcconfig"; path = "Target Support Files/Pods-DoggoMeetDoggo/Pods-DoggoMeetDoggo.debug.xcconfig"; sourceTree = "<group>"; };
 		5CB875AF225E1B5200B27569 /* DoggoMeetDoggo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DoggoMeetDoggo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5CB875B2225E1B5200B27569 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5CB875B4225E1B5200B27569 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -22,6 +34,18 @@
 		5CB875B9225E1B5700B27569 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5CB875BC225E1B5700B27569 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5CB875BE225E1B5700B27569 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5CB875C7225E22BE00B27569 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		5CB875C9225E22C900B27569 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		5CB875CB225E248100B27569 /* SlideViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideViewController.swift; sourceTree = "<group>"; };
+		5CB875CD225E250A00B27569 /* SlideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideView.swift; sourceTree = "<group>"; };
+		5CB875CF225E251C00B27569 /* Slide.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Slide.xib; sourceTree = "<group>"; };
+		5CB875D1225E31E600B27569 /* UsersTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersTableViewController.swift; sourceTree = "<group>"; };
+		5CB875D3225E31F900B27569 /* UsersTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersTableViewCell.swift; sourceTree = "<group>"; };
+		5CB875D7225E415E00B27569 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		5CB875D9225E44BB00B27569 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		5CB875FD225F62D500B27569 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		747894065D76C7758187D1EB /* Pods-DoggoMeetDoggo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DoggoMeetDoggo.release.xcconfig"; path = "Target Support Files/Pods-DoggoMeetDoggo/Pods-DoggoMeetDoggo.release.xcconfig"; sourceTree = "<group>"; };
+		89422D8FFD8AEBF27D36B040 /* Pods_DoggoMeetDoggo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DoggoMeetDoggo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,6 +53,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5FC7FB51C9F85E6E6C76EA4E /* Pods_DoggoMeetDoggo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -40,6 +65,8 @@
 			children = (
 				5CB875B1225E1B5200B27569 /* DoggoMeetDoggo */,
 				5CB875B0225E1B5200B27569 /* Products */,
+				A21915776D454D082A0323B1 /* Pods */,
+				BC2A41563885E897FEA14EDB /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -55,13 +82,65 @@
 			isa = PBXGroup;
 			children = (
 				5CB875B2225E1B5200B27569 /* AppDelegate.swift */,
-				5CB875B4225E1B5200B27569 /* ViewController.swift */,
-				5CB875B6225E1B5200B27569 /* Main.storyboard */,
+				5CB875C6225E1B9200B27569 /* Model */,
+				5CB875C5225E1B8800B27569 /* Controller */,
+				5CB875C4225E1B7D00B27569 /* View */,
 				5CB875B9225E1B5700B27569 /* Assets.xcassets */,
 				5CB875BB225E1B5700B27569 /* LaunchScreen.storyboard */,
 				5CB875BE225E1B5700B27569 /* Info.plist */,
+				5CB875FD225F62D500B27569 /* GoogleService-Info.plist */,
 			);
 			path = DoggoMeetDoggo;
+			sourceTree = "<group>";
+		};
+		5CB875C4225E1B7D00B27569 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				5CB875B6225E1B5200B27569 /* Main.storyboard */,
+				5CB875CF225E251C00B27569 /* Slide.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		5CB875C5225E1B8800B27569 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				5CB875B4225E1B5200B27569 /* ViewController.swift */,
+				5CB875C7225E22BE00B27569 /* LoginViewController.swift */,
+				5CB875C9225E22C900B27569 /* RegisterViewController.swift */,
+				5CB875CB225E248100B27569 /* SlideViewController.swift */,
+				5CB875D1225E31E600B27569 /* UsersTableViewController.swift */,
+				5CB875D7225E415E00B27569 /* MainViewController.swift */,
+				5CB875D9225E44BB00B27569 /* ProfileViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		5CB875C6225E1B9200B27569 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				5CB875CD225E250A00B27569 /* SlideView.swift */,
+				5CB875D3225E31F900B27569 /* UsersTableViewCell.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		A21915776D454D082A0323B1 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				4B55C47C364325C109B84031 /* Pods-DoggoMeetDoggo.debug.xcconfig */,
+				747894065D76C7758187D1EB /* Pods-DoggoMeetDoggo.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		BC2A41563885E897FEA14EDB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				89422D8FFD8AEBF27D36B040 /* Pods_DoggoMeetDoggo.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -71,9 +150,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5CB875C1225E1B5700B27569 /* Build configuration list for PBXNativeTarget "DoggoMeetDoggo" */;
 			buildPhases = (
+				03B73BAD3368B0456762157D /* [CP] Check Pods Manifest.lock */,
 				5CB875AB225E1B5200B27569 /* Sources */,
 				5CB875AC225E1B5200B27569 /* Frameworks */,
 				5CB875AD225E1B5200B27569 /* Resources */,
+				696BA345BBED1F63B8959D39 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -125,18 +206,79 @@
 				5CB875BD225E1B5700B27569 /* LaunchScreen.storyboard in Resources */,
 				5CB875BA225E1B5700B27569 /* Assets.xcassets in Resources */,
 				5CB875B8225E1B5200B27569 /* Main.storyboard in Resources */,
+				5CB875D0225E251C00B27569 /* Slide.xib in Resources */,
+				5CB875FE225F62D500B27569 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		03B73BAD3368B0456762157D /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-DoggoMeetDoggo-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		696BA345BBED1F63B8959D39 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-DoggoMeetDoggo/Pods-DoggoMeetDoggo-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-DoggoMeetDoggo/Pods-DoggoMeetDoggo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		5CB875AB225E1B5200B27569 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5CB875D4225E31F900B27569 /* UsersTableViewCell.swift in Sources */,
+				5CB875CE225E250A00B27569 /* SlideView.swift in Sources */,
+				5CB875DA225E44BB00B27569 /* ProfileViewController.swift in Sources */,
+				5CB875C8225E22BE00B27569 /* LoginViewController.swift in Sources */,
+				5CB875CC225E248100B27569 /* SlideViewController.swift in Sources */,
 				5CB875B5225E1B5200B27569 /* ViewController.swift in Sources */,
 				5CB875B3225E1B5200B27569 /* AppDelegate.swift in Sources */,
+				5CB875D8225E415E00B27569 /* MainViewController.swift in Sources */,
+				5CB875D2225E31E600B27569 /* UsersTableViewController.swift in Sources */,
+				5CB875CA225E22C900B27569 /* RegisterViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -280,6 +422,7 @@
 		};
 		5CB875C2225E1B5700B27569 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4B55C47C364325C109B84031 /* Pods-DoggoMeetDoggo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -297,6 +440,7 @@
 		};
 		5CB875C3225E1B5700B27569 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 747894065D76C7758187D1EB /* Pods-DoggoMeetDoggo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
