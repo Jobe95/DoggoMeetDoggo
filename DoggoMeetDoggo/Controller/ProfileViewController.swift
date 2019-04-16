@@ -25,11 +25,19 @@ class ProfileViewController: UIViewController, UITextViewDelegate {
     
     let db = Firestore.firestore()
     let currentUID = Auth.auth().currentUser?.uid
+    var user = [Users]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "Din profil"
-        loadCurrentUser()
+        if Auth.auth().currentUser != nil {
+            // User is signed in.
+            loadCurrentUser()
+        } else {
+            // No user is signed in.
+            performSegue(withIdentifier: "goToRoot", sender: self)
+        }
+        
         
         aboutUserTextView.delegate = self
         aboutDogTextView.delegate = self
@@ -39,39 +47,38 @@ class ProfileViewController: UIViewController, UITextViewDelegate {
     
     func loadCurrentUser() {
         
-        
-        
-        db.collection("users").whereField("userID", isEqualTo: currentUID!).getDocuments {
+        db.collection("users").document(currentUID!).getDocument {
             (snapshot, error) in
             if let error = error {
                 print("Error getting documents: \(error)")
             }
             else {
-                for document in snapshot!.documents {
-                    //print("\(document.documentID) => \(document.data())")
+                if let document = snapshot {
                     
-                    if let dictionary = document.data() as? [String : String] {
-
                         var user = Users()
-                        user.firstName = dictionary["firstname"]
-                        user.lastName = dictionary["lastname"]
-                        user.email = dictionary["email"]
-                        user.uid = dictionary["userID"]
-                        user.aboutUser = dictionary["aboutUser"]
-                        user.aboutDog = dictionary["aboutUserDog"]
-                        self.loadLabels(user: user)
                         
-                    }
+                        user.firstName = document["firstname"] as? String
+                        user.lastName = document["lastname"] as? String
+                        user.email = document["email"] as? String
+                        user.uid = document["userID"] as? String
+                        user.aboutUser = document["aboutUser"] as? String
+                        user.aboutDog = document["aboutUserDog"] as? String
+                        self.user.append(user)
+                        print("Printar inuti closure")
+                        print(user)
+                        self.loadLabels()
                 }
             }
         }
     }
     
-    func loadLabels(user: Users) {
-        userNameLabel.text = "\(user.firstName!) \(user.lastName!)"
-        aboutUserLabel.text = "Om \(user.firstName!)"
-        aboutUserTextView.text = "\(user.aboutUser ?? "Info om dig själv")"
-        aboutDogTextView.text = "\(user.aboutDog ?? "Info om din/dina hundar")"
+    func loadLabels() {
+        print("Printar user array")
+        print(user)
+        userNameLabel.text = "\(user[0].firstName ?? "Förnamn") \(user[0].lastName ?? "Efternamn")"
+        aboutUserLabel.text = "Om \(user[0].firstName ?? "Användarnamn")"
+        aboutUserTextView.text = "\(user[0].aboutUser ?? "Info om dig själv")"
+        aboutDogTextView.text = "\(user[0].aboutDog ?? "Info om din/dina hundar")"
         
     }
     
@@ -79,7 +86,7 @@ class ProfileViewController: UIViewController, UITextViewDelegate {
         
         let userRef = db.collection("users").document(currentUID!)
         
-        // Set the "capital" field of the city 'DC'
+        // Lägger till aboutUser och aboutUserDog fälten till currentUser på DB
         userRef.updateData([
             "aboutUser": aboutUserTextView.text ?? "Info om dig själv",
             "aboutUserDog": aboutDogTextView.text ?? "Info om din/dina hundar"
@@ -90,6 +97,7 @@ class ProfileViewController: UIViewController, UITextViewDelegate {
                 print("Document successfully updated")
             }
         }
+        loadLabels()
     }
     
 

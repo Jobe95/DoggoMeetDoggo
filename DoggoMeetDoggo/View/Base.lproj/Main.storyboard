@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lerone-pieters-1395409-unsplash" translatesAutoresizingMaskIntoConstraints="NO" id="U3x-Zh-wgQ">
-                                <rect key="frame" x="0.0" y="64" width="375" height="513"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="557"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kuP-Z1-g2c">
                                 <rect key="frame" x="0.0" y="622" width="375" height="45"/>
@@ -196,7 +196,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B7a-2H-Qbb">
-                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                             </scrollView>
                             <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="VMh-3D-TVM">
                                 <rect key="frame" x="168" y="610" width="39" height="37"/>
@@ -376,6 +376,7 @@
                         <outlet property="dogInfoLabel" destination="bAi-98-m45" id="JGU-Z3-PbC"/>
                         <outlet property="profileImageView" destination="97I-Ci-UlA" id="TBe-sd-nVc"/>
                         <outlet property="userNameLabel" destination="uNC-83-BmJ" id="8zv-o2-ds5"/>
+                        <segue destination="BYZ-38-t0r" kind="show" identifier="goToRoot" id="Xzg-ie-G9B"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Fl1-R3-XnZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -487,5 +488,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="JQ5-zk-RFd"/>
+        <segue reference="Xzg-ie-G9B"/>
     </inferredMetricsTieBreakers>
 </document>
