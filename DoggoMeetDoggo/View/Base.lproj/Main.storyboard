@@ -62,6 +62,9 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" id="nwY-m8-SXK"/>
+                    <connections>
+                        <segue destination="uJg-CW-krc" kind="show" identifier="goToMain" id="3GU-oF-Yhd"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -95,13 +98,19 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Logga in"/>
                                 <connections>
-                                    <segue destination="uJg-CW-krc" kind="show" identifier="goToApp" id="Ltq-lS-BPT"/>
+                                    <action selector="loginButtonPressed:" destination="WA6-dv-LWf" eventType="touchUpInside" id="RPI-Wx-mrV"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="0.0" blue="0.072387332530000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="lF5-vk-0kH"/>
                     </view>
+                    <connections>
+                        <outlet property="emailTextField" destination="0Kh-6g-5MP" id="vMt-Nf-qLe"/>
+                        <outlet property="loginButtonOutlet" destination="V1W-rO-i1X" id="phd-Am-fes"/>
+                        <outlet property="passwordTextField" destination="G00-dF-Cjk" id="kUS-Ok-ITw"/>
+                        <segue destination="uJg-CW-krc" kind="show" identifier="goToApp" id="JQ5-zk-RFd"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eA4-hN-Txo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -148,6 +157,20 @@
                                     <segue destination="2Dy-1Q-cyJ" kind="show" identifier="goToSlideShow" id="DeF-xC-dXQ"/>
                                 </connections>
                             </button>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Förnamn" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="c8R-5p-KCP">
+                                <rect key="frame" x="16" y="108" width="343" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Efternamn" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="YXR-fE-Y2U">
+                                <rect key="frame" x="16" y="146" width="343" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" red="1" green="0.56029358969999998" blue="0.53870648639999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="VTJ-bD-blf"/>
@@ -155,6 +178,8 @@
                     <connections>
                         <outlet property="addPhoto" destination="mzU-2O-2G8" id="WyK-Vd-FjY"/>
                         <outlet property="emailTextField" destination="cYQ-sx-8WJ" id="H7H-si-Vpf"/>
+                        <outlet property="firstNameTextField" destination="c8R-5p-KCP" id="5Pi-Ci-Ngd"/>
+                        <outlet property="lastNameTextField" destination="YXR-fE-Y2U" id="LH2-Ch-hqv"/>
                         <outlet property="passwordTextField" destination="ARq-oj-ovu" id="zPS-eV-06p"/>
                     </connections>
                 </viewController>
@@ -280,7 +305,7 @@
                                         <rect key="frame" x="8" y="8" width="110" height="110"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Jonatan Bengtsson" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uNC-83-BmJ">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="def" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uNC-83-BmJ">
                                         <rect key="frame" x="8" y="126" width="207" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -297,7 +322,7 @@
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="0.64404570689999996" blue="0.63804876509999997" alpha="0.59091659330000001" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Om Jonatan" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qph-H0-e6B">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="def" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qph-H0-e6B">
                                 <rect key="frame" x="16" y="309" width="343" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -312,7 +337,6 @@
                                         <rect key="frame" x="16" y="12" width="343" height="71"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
@@ -334,7 +358,6 @@
                                         <rect key="frame" x="16" y="12" width="343" height="71"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
@@ -345,6 +368,15 @@
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="dfY-EW-56M"/>
                     </view>
+                    <connections>
+                        <outlet property="aboutDogLabel" destination="kWy-5b-g8D" id="sw9-Zb-2uR"/>
+                        <outlet property="aboutDogTextView" destination="zVy-aq-HZe" id="lgf-ZI-Tiv"/>
+                        <outlet property="aboutUserLabel" destination="Qph-H0-e6B" id="EFb-zF-8dE"/>
+                        <outlet property="aboutUserTextView" destination="u7z-qY-YnI" id="hlb-gq-7CB"/>
+                        <outlet property="dogInfoLabel" destination="bAi-98-m45" id="JGU-Z3-PbC"/>
+                        <outlet property="profileImageView" destination="97I-Ci-UlA" id="TBe-sd-nVc"/>
+                        <outlet property="userNameLabel" destination="uNC-83-BmJ" id="8zv-o2-ds5"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Fl1-R3-XnZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -358,8 +390,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lerone-pieters-1395409-unsplash" translatesAutoresizingMaskIntoConstraints="NO" id="nQA-G0-u3J">
-                                <rect key="frame" x="0.0" y="64" width="375" height="511"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="lerone-pieters-1395409-unsplash" translatesAutoresizingMaskIntoConstraints="NO" id="nQA-G0-u3J">
+                                <rect key="frame" x="0.0" y="64" width="375" height="375"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2eg-bU-Jey">
                                 <rect key="frame" x="0.0" y="575" width="187.5" height="92"/>
@@ -369,6 +401,9 @@
                                     <constraint firstAttribute="height" constant="92" id="tgw-Iw-m0q"/>
                                 </constraints>
                                 <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="noButtonPressed:" destination="uJg-CW-krc" eventType="touchUpInside" id="W9y-Vd-g9Q"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="glX-8c-n3Q">
                                 <rect key="frame" x="187.5" y="575" width="187.5" height="92"/>
@@ -378,16 +413,25 @@
                                     <constraint firstAttribute="width" constant="187.5" id="xtN-Hm-CtP"/>
                                 </constraints>
                                 <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="yesButtonPressed:" destination="uJg-CW-krc" eventType="touchUpInside" id="wnL-3U-Ly4"/>
+                                </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C7u-bD-0G5">
+                                <rect key="frame" x="0.0" y="439" width="375" height="136"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="2eg-bU-Jey" firstAttribute="top" secondItem="nQA-G0-u3J" secondAttribute="bottom" id="2xS-Gv-sy6"/>
                             <constraint firstItem="nQA-G0-u3J" firstAttribute="top" secondItem="Fdp-xe-LU3" secondAttribute="top" id="38s-ZP-3j6"/>
                             <constraint firstItem="nQA-G0-u3J" firstAttribute="trailing" secondItem="Fdp-xe-LU3" secondAttribute="trailing" id="6z6-8N-z72"/>
                             <constraint firstItem="2eg-bU-Jey" firstAttribute="leading" secondItem="Fdp-xe-LU3" secondAttribute="leading" id="Cf2-jf-Lgd"/>
                             <constraint firstItem="2eg-bU-Jey" firstAttribute="bottom" secondItem="Fdp-xe-LU3" secondAttribute="bottom" id="TR1-u7-Fyw"/>
-                            <constraint firstItem="glX-8c-n3Q" firstAttribute="top" secondItem="nQA-G0-u3J" secondAttribute="bottom" id="VMP-xO-cba"/>
                             <constraint firstItem="glX-8c-n3Q" firstAttribute="bottom" secondItem="Fdp-xe-LU3" secondAttribute="bottom" id="o3F-6U-YJ1"/>
                             <constraint firstItem="nQA-G0-u3J" firstAttribute="leading" secondItem="Fdp-xe-LU3" secondAttribute="leading" id="obV-RO-HyQ"/>
                             <constraint firstItem="Fdp-xe-LU3" firstAttribute="trailing" secondItem="glX-8c-n3Q" secondAttribute="trailing" id="pSE-Ch-Mcv"/>
@@ -406,6 +450,12 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="imageView" destination="nQA-G0-u3J" id="vZo-Lz-L21"/>
+                        <outlet property="infoLabel" destination="C7u-bD-0G5" id="KSa-22-fbZ"/>
+                        <outlet property="noButtonOutlet" destination="2eg-bU-Jey" id="ZB4-Bg-jiP"/>
+                        <outlet property="yesButtonOutlet" destination="glX-8c-n3Q" id="ge7-gm-ux8"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W9D-su-iG2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -436,6 +486,6 @@
         <image name="lerone-pieters-1395409-unsplash" width="400" height="576.5"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Ltq-lS-BPT"/>
+        <segue reference="JQ5-zk-RFd"/>
     </inferredMetricsTieBreakers>
 </document>

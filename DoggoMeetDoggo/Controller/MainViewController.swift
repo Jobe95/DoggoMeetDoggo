@@ -7,15 +7,212 @@
 //
 
 import UIKit
+import Firebase
 
 class MainViewController: UIViewController {
 
+    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var infoLabel: UILabel!
+    @IBOutlet weak var noButtonOutlet: UIButton!
+    @IBOutlet weak var yesButtonOutlet: UIButton!
+    
+    let db = Firestore.firestore()
+    let currentUID = Auth.auth().currentUser?.uid
+    var allUsersArray = [Users]()
+    var currentUserArray = [String]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        navigationItem.title = "Hitta vänner"
+        
+        checkIfUserIsFriends()
+        loadAllUsersFromDB()
+        
 
         // Do any additional setup after loading the view.
     }
     
+    func loadAllUsersFromDB() {
+        db.collection("users").getDocuments { (snapshot, error) in
+            if error != nil {
+                print(error!)
+            } else {
+                for document in snapshot!.documents {
+                    if let snapshotValue = document.data() as? [String : Any] {
+                        
+                        let userId = snapshotValue["userID"] as? String
+
+                        if userId == self.currentUID {
+                            
+                        } else {
+                            var user = Users()
+                            user.firstName = snapshotValue["firstname"] as? String
+                            user.lastName = snapshotValue["lastname"] as? String
+                            user.email = snapshotValue["email"] as? String
+                            user.uid = snapshotValue["userID"] as? String
+                            user.aboutUser = snapshotValue["aboutUser"] as? String
+                            user.aboutDog = snapshotValue["aboutUserDog"] as? String
+                            
+                            self.allUsersArray.append(user)
+                        }
+                    }
+                }
+                self.checkIfUserIsFriends()
+            }
+            self.filterUsersToShow()
+        }
+    }
+    
+    func loadViewWithInformation() {
+        // Visar info om användare på index 0
+        if allUsersArray.isEmpty == true {
+            infoLabel.text = "Inga mer användare inom räckhåll"
+        } else {
+            infoLabel.text = allUsersArray[0].aboutUser
+        }
+    }
+    
+    func filterArrayForUser() {
+        for match in allUsersArray {
+            for str in currentUserArray {
+                if match.uid == str {
+                    allUsersArray = allUsersArray.filter { !currentUserArray.contains($0.uid!) }
+                }
+            }
+        }
+        loadViewWithInformation()
+    }
+    
+    
+    //MARK: - Buttons Methods
+    @IBAction func yesButtonPressed(_ sender: UIButton) {
+        
+        if allUsersArray.isEmpty == true {
+            
+        } else {
+            friendRequestSent()
+            friendRequestReceived()
+            checkIfUserIsFriends()
+            
+            allUsersArray.remove(at: 0)
+            loadViewWithInformation()
+        }
+    }
+    
+    @IBAction func noButtonPressed(_ sender: UIButton) {
+        
+        if allUsersArray.isEmpty == true {
+            
+        } else {
+            
+            let userRef = db.collection("users").document(currentUID!)
+            
+            userRef.updateData([
+                "noFriends": FieldValue.arrayUnion([allUsersArray[0].uid as Any])
+            ]) { err in
+                if let err = err {
+                    print("Error updating document: \(err)")
+                } else {
+                    print("User nofriends successfully added")
+                }
+            }
+            allUsersArray.remove(at: 0)
+            loadViewWithInformation()
+        }
+    }
+
+    //MARK: - Query DB Methods
+    func filterUsersToShow() {
+        db.collection("users").document(currentUID!).getDocument { (snapshot, error) in
+            if let document = snapshot {
+                let friendsArray = document["friends"] as? Array ?? [""]
+                let noFriendsArray = document["noFriends"] as? Array ?? [""]
+                
+                for i in friendsArray {
+                    self.currentUserArray.append(i)
+                }
+                for i in noFriendsArray {
+                    self.currentUserArray.append(i)
+                }
+                
+                self.filterArrayForUser()
+            }
+        }
+    }
+    
+    func friendRequestSent() {
+        let userRef = db.collection("users").document(currentUID!)
+        
+        
+         // Set friendRequestSent to id of userID
+        userRef.updateData([
+            "friendRequestSent": FieldValue.arrayUnion([allUsersArray[0].uid as Any])
+        ]) { err in
+            if let err = err {
+                print("Error updating document: \(err)")
+            } else {
+                print("friendRequest successfully sent")
+            }
+        }
+    }
+    
+    func friendRequestReceived() {
+        
+        if let userUID = allUsersArray[0].uid {
+            let userRef = db.collection("users").document(userUID)
+            
+            userRef.updateData([
+                "friendRequestReceived": FieldValue.arrayUnion([currentUID as Any])
+            ]) { (err) in
+                if let err = err {
+                    print("Error updating document: \(err)")
+                } else {
+                    print("friendRequest successfully received")
+                }
+            }
+        }
+    }
+    
+    func checkIfUserIsFriends () {
+        
+        // Gör en optional binding på currentuser om den är inloogad
+        db.collection("users").document(currentUID!).getDocument { (snapshot, error) in
+            if error != nil {
+                print("Something went wrong checking if user is friends \(error!)")
+            } else {
+                if let document = snapshot {
+                    let sentArray = document["friendRequestSent"] as? Array ?? [""]
+                    let receivedArray = document["friendRequestReceived"] as? Array ?? [""]
+                    
+                    // Loopar igenom båda arrays och kollar ifall index i är samma som n. Lägger till som vän
+                    for i in receivedArray {
+                        for n in sentArray {
+                            if i == n && i != "" {
+                                let sameIdConfirmed = i
+                                
+                                let userRef = self.db.collection("users").document(self.currentUID!)
+                                
+                                // Uppdaterar friends array i DB finns ingen skapas den.
+                                // Tar även bort id från sent och received arrays.
+                                userRef.updateData([
+                                    "friends": FieldValue.arrayUnion([sameIdConfirmed]),
+                                    "friendRequestSent": FieldValue.arrayRemove([sameIdConfirmed]),
+                                    "friendRequestReceived": FieldValue.arrayRemove([sameIdConfirmed])
+                                ]) { err in
+                                    if let err = err {
+                                        print("Error \(err)")
+                                    } else {
+                                        print("Updated documents success, added friend and removed id")
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     /*
     // MARK: - Navigation

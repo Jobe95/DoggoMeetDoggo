@@ -11,20 +11,32 @@ import Firebase
 
 class ViewController: UIViewController {
     
-    
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let handle = Auth.auth()
+        
+        let handler = Auth.auth()
         // Do any additional setup after loading the view, typically from a nib.
         navigationItem.title = "Välkommen"
+        
+        
+//        if handler.currentUser != nil {
+//            // User is signed in.
+//            // ...
+//
+//            print("\((Auth.auth().currentUser?.email))")
+//
+//            performSegue(withIdentifier: "goToMain", sender: self)
+//        } else {
+//            // No user is signed in.
+//            // ...
+//        }
+        
+        
     }
     
 //    override func viewWillAppear(_ animated: Bool) {
-//        handle.addStateDidChangeListener { (auth, user) in
-////            For each of your app's views that need information about the signed-in user, attach a listener to the FIRAuth object. This listener gets called whenever the user's sign-in state changes.
-////
-////            Attach the listener in the view controller's viewWillAppear method:
+//        
 //        }
 //    }
 //    

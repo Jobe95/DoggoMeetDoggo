@@ -12,11 +12,14 @@ import Firebase
 class RegisterViewController: UIViewController {
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var firstNameTextField: UITextField!
+    @IBOutlet weak var lastNameTextField: UITextField!
+    
+    let db = Firestore.firestore()
     
     @IBOutlet weak var addPhoto: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
     }
     
@@ -31,6 +34,21 @@ class RegisterViewController: UIViewController {
             } else {
                 // Registrera användare fungerar
                 print("Create user works fine")
+                
+                let uid = Auth.auth().currentUser?.uid
+                
+                self.db.collection("users").document(uid!).setData([
+                    "firstname": self.firstNameTextField.text!,
+                    "lastname": self.lastNameTextField.text!,
+                    "userID": uid,
+                    "email": self.emailTextField.text!,
+                ]) { err in
+                    if let err = err {
+                        print("Error writing document: \(err)")
+                    } else {
+                        print("Document successfully written!")
+                    }
+                }
             }
         }
     

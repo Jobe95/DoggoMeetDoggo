@@ -7,14 +7,45 @@
 //
 
 import UIKit
+import Firebase
 
 class LoginViewController: UIViewController {
-
+    @IBOutlet weak var emailTextField: UITextField!
+    @IBOutlet weak var passwordTextField: UITextField!
+    
+    @IBOutlet weak var loginButtonOutlet: UIButton!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+    
     }
+    @IBAction func loginButtonPressed(_ sender: UIButton) {
+        
+        loginButtonOutlet.isEnabled = false
+        
+        Auth.auth().signIn(withEmail: emailTextField.text!, password: passwordTextField.text!) {
+            (user, error) in
+            if error != nil {
+                print(error!)
+            }
+            else {
+                if Auth.auth().currentUser != nil {
+                    // User is signed in.
+                    print("Login successful!")
+                    self.performSegue(withIdentifier: "goToApp", sender: self)
+                } else {
+                    // No user is signed in.
+                    print("Something went wrong, user is not signed in!")
+                }
+            }
+            self.loginButtonOutlet.isEnabled = true
+        }
+    }
+    
+    
     
 
     /*
