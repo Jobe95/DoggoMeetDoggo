@@ -11,6 +11,9 @@ import Firebase
 
 class ProfileViewController: UIViewController, UITextViewDelegate {
     
+    
+    @IBOutlet weak var topView: UIView!
+    
     @IBOutlet weak var profileImageView: UIImageView!
     
     @IBOutlet weak var userNameLabel: UILabel!
@@ -38,11 +41,21 @@ class ProfileViewController: UIViewController, UITextViewDelegate {
             performSegue(withIdentifier: "goToRoot", sender: self)
         }
         
+        //TODO: Set the tapGesture here:
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(viewTapped))
+        topView.addGestureRecognizer(tapGesture)
+        
         
         aboutUserTextView.delegate = self
         aboutDogTextView.delegate = self
 
         // Do any additional setup after loading the view.
+    }
+    
+    //TODO: Declare tableViewTapped here:
+    @objc func viewTapped() {
+        aboutUserTextView.endEditing(true)
+        aboutDogTextView.endEditing(true)
     }
     
     func loadCurrentUser() {

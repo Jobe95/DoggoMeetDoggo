@@ -23,6 +23,9 @@
 		5CB875DA225E44BB00B27569 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB875D9225E44BB00B27569 /* ProfileViewController.swift */; };
 		5CB875FE225F62D500B27569 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5CB875FD225F62D500B27569 /* GoogleService-Info.plist */; };
 		5CB876002264CCAC00B27569 /* Users.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB875FF2264CCAC00B27569 /* Users.swift */; };
+		5CB876022267610200B27569 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB876012267610200B27569 /* ChatViewController.swift */; };
+		5CB876052267613600B27569 /* ChatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB876042267613600B27569 /* ChatTableViewCell.swift */; };
+		5CB876072267637800B27569 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB876062267637800B27569 /* Message.swift */; };
 		5FC7FB51C9F85E6E6C76EA4E /* Pods_DoggoMeetDoggo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89422D8FFD8AEBF27D36B040 /* Pods_DoggoMeetDoggo.framework */; };
 /* End PBXBuildFile section */
 
@@ -46,6 +49,9 @@
 		5CB875D9225E44BB00B27569 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		5CB875FD225F62D500B27569 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5CB875FF2264CCAC00B27569 /* Users.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Users.swift; sourceTree = "<group>"; };
+		5CB876012267610200B27569 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
+		5CB876042267613600B27569 /* ChatTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatTableViewCell.swift; sourceTree = "<group>"; };
+		5CB876062267637800B27569 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		747894065D76C7758187D1EB /* Pods-DoggoMeetDoggo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DoggoMeetDoggo.release.xcconfig"; path = "Target Support Files/Pods-DoggoMeetDoggo/Pods-DoggoMeetDoggo.release.xcconfig"; sourceTree = "<group>"; };
 		89422D8FFD8AEBF27D36B040 /* Pods_DoggoMeetDoggo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DoggoMeetDoggo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -98,6 +104,7 @@
 		5CB875C4225E1B7D00B27569 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				5CB876032267611A00B27569 /* Custom Cell */,
 				5CB875B6225E1B5200B27569 /* Main.storyboard */,
 				5CB875CF225E251C00B27569 /* Slide.xib */,
 			);
@@ -114,6 +121,7 @@
 				5CB875D1225E31E600B27569 /* UsersTableViewController.swift */,
 				5CB875D7225E415E00B27569 /* MainViewController.swift */,
 				5CB875D9225E44BB00B27569 /* ProfileViewController.swift */,
+				5CB876012267610200B27569 /* ChatViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -122,10 +130,19 @@
 			isa = PBXGroup;
 			children = (
 				5CB875CD225E250A00B27569 /* SlideView.swift */,
-				5CB875D3225E31F900B27569 /* UsersTableViewCell.swift */,
 				5CB875FF2264CCAC00B27569 /* Users.swift */,
+				5CB876062267637800B27569 /* Message.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		5CB876032267611A00B27569 /* Custom Cell */ = {
+			isa = PBXGroup;
+			children = (
+				5CB875D3225E31F900B27569 /* UsersTableViewCell.swift */,
+				5CB876042267613600B27569 /* ChatTableViewCell.swift */,
+			);
+			path = "Custom Cell";
 			sourceTree = "<group>";
 		};
 		A21915776D454D082A0323B1 /* Pods */ = {
@@ -291,7 +308,10 @@
 				5CB875D8225E415E00B27569 /* MainViewController.swift in Sources */,
 				5CB875D2225E31E600B27569 /* UsersTableViewController.swift in Sources */,
 				5CB875CA225E22C900B27569 /* RegisterViewController.swift in Sources */,
+				5CB876022267610200B27569 /* ChatViewController.swift in Sources */,
+				5CB876052267613600B27569 /* ChatTableViewCell.swift in Sources */,
 				5CB876002264CCAC00B27569 /* Users.swift in Sources */,
+				5CB876072267637800B27569 /* Message.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -7,11 +7,23 @@
 //
 
 import UIKit
+import Firebase
 
 class UsersTableViewController: UITableViewController {
+    
+    let db = Firestore.firestore()
+    let currentUID = Auth.auth().currentUser?.uid
+    var friendsArray = [String]()
+    var loadFriendsArray = [Users]()
+    
+    var currentUser = Users()
+    var userToChat = Users()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        loadFriendsForUser()
+ 
         
         navigationItem.title = "Meddelanden"
         
@@ -23,6 +35,49 @@ class UsersTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
+    
+    
+    //MARK: - Query DB for tableView
+    func loadFriendsForUser() {
+        db.collection("users").document(currentUID!).getDocument { (snapshot, error) in
+            if let document = snapshot {
+                self.friendsArray = document["friends"] as? Array ?? [""]
+                
+                self.filterArrayToUsers()
+            }
+        }
+    }
+    
+    func filterArrayToUsers() {
+        
+        if friendsArray.isEmpty || friendsArray.first == "" {
+            friendsArray.removeAll()
+        } else {
+            
+            for idOfUser in friendsArray {
+                
+                db.collection("users").document(idOfUser).getDocument { (snapshot, error) in
+                    if let document = snapshot {
+                        
+                        var user = Users()
+                        user.firstName = document["firstname"] as? String
+                        user.lastName = document["lastname"] as? String
+                        user.email = document["email"] as? String
+                        user.uid = document["userID"] as? String
+                        user.aboutUser = document["aboutUser"] as? String
+                        user.aboutDog = document["aboutUserDog"] as? String
+                        
+                        self.loadFriendsArray.append(user)
+                        self.tableView.reloadData()
+                    }
+                }
+                
+            }
+            
+        }
+
+    }
+    
 
     // MARK: - Table view data source
 
@@ -33,21 +88,62 @@ class UsersTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 1
+        
+        if loadFriendsArray.isEmpty {
+            return 1
+        }
+        
+        return loadFriendsArray.count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! UsersTableViewCell
         
-        cell.nameLabel.text = "Jennifer"
-        cell.messageLabel.text = "Jag vill gå ut och gå och sen kan vi knulla i skogen"
-        cell.profilImageView.image = UIImage(named: "lerone-pieters-1395409-unsplash")
+        if loadFriendsArray.isEmpty == true {
+            cell.nameLabel.text = "Inga vänner än"
+            cell.messageLabel.text = "Matcha med användare för att skriva med dem"
+        } else {
+            cell.nameLabel.text = loadFriendsArray[indexPath.row].firstName
+            cell.messageLabel.text = "Jag vill gå ut och gå med våra hundar"
+            cell.profilImageView.image = UIImage(named: "lerone-pieters-1395409-unsplash")
+            
+            return cell
+        }
+        
+        
 
         // Configure the cell...
 
         return cell
     }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if loadFriendsArray.isEmpty {
+            
+        } else {
+            userToChat = loadFriendsArray[indexPath.row]
+            performSegue(withIdentifier: "goToChat", sender: self)
+        }
+    }
+    
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destination.
+     // Pass the selected object to the new view controller.
+        
+        //TODO: - Skicka med currentuser och user från indexpath.row till en array av users.
+        
+        let chatVC = segue.destination as? ChatViewController
+        chatVC?.otherUser = userToChat
+        chatVC?.currentUser = currentUser
+        
+        
+        
+        
+     }
     
 
     /*
@@ -85,14 +181,6 @@ class UsersTableViewController: UITableViewController {
     }
     */
 
-    /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

@@ -21,6 +21,8 @@ class MainViewController: UIViewController {
     var allUsersArray = [Users]()
     var currentUserArray = [String]()
     
+    var currentUser = Users()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -33,6 +35,7 @@ class MainViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
+    //MARK: - Load Methods
     func loadAllUsersFromDB() {
         db.collection("users").getDocuments { (snapshot, error) in
             if error != nil {
@@ -44,7 +47,12 @@ class MainViewController: UIViewController {
                         let userId = snapshotValue["userID"] as? String
 
                         if userId == self.currentUID {
-                            
+                            self.currentUser.firstName = snapshotValue["firstname"] as? String
+                            self.currentUser.lastName = snapshotValue["lastname"] as? String
+                            self.currentUser.email = snapshotValue["email"] as? String
+                            self.currentUser.uid = snapshotValue["userID"] as? String
+                            self.currentUser.aboutUser = snapshotValue["aboutUser"] as? String
+                            self.currentUser.aboutDog = snapshotValue["aboutUserDog"] as? String
                         } else {
                             var user = Users()
                             user.firstName = snapshotValue["firstname"] as? String
@@ -176,7 +184,7 @@ class MainViewController: UIViewController {
     
     func checkIfUserIsFriends () {
         
-        // Gör en optional binding på currentuser om den är inloogad
+        //TODO: - Gör en optional binding på currentuser om den är inloogad ????
         db.collection("users").document(currentUID!).getDocument { (snapshot, error) in
             if error != nil {
                 print("Something went wrong checking if user is friends \(error!)")
@@ -214,14 +222,18 @@ class MainViewController: UIViewController {
         }
     }
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
+        
+        let userTVC = segue.destination as? UsersTableViewController
+        userTVC?.currentUser = currentUser
+        
     }
-    */
+    
 
 }

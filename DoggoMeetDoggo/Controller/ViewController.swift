@@ -15,12 +15,11 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let handler = Auth.auth()
         // Do any additional setup after loading the view, typically from a nib.
         navigationItem.title = "Välkommen"
         
         
-//        if handler.currentUser != nil {
+//        if Auth.auth().currentUser != nil {
 //            // User is signed in.
 //            // ...
 //
