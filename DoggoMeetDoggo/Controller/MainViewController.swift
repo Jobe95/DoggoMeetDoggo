@@ -8,8 +8,9 @@
 
 import UIKit
 import Firebase
+import Kingfisher
 
-class MainViewController: UIViewController {
+class MainViewController: UIViewController, ProfileViewControllerDelegate {
 
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var infoLabel: UILabel!
@@ -22,6 +23,7 @@ class MainViewController: UIViewController {
     var currentUserArray = [String]()
     
     var currentUser = Users()
+    var user = Users()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,16 +55,20 @@ class MainViewController: UIViewController {
                             self.currentUser.uid = snapshotValue["userID"] as? String
                             self.currentUser.aboutUser = snapshotValue["aboutUser"] as? String
                             self.currentUser.aboutDog = snapshotValue["aboutUserDog"] as? String
-                        } else {
-                            var user = Users()
-                            user.firstName = snapshotValue["firstname"] as? String
-                            user.lastName = snapshotValue["lastname"] as? String
-                            user.email = snapshotValue["email"] as? String
-                            user.uid = snapshotValue["userID"] as? String
-                            user.aboutUser = snapshotValue["aboutUser"] as? String
-                            user.aboutDog = snapshotValue["aboutUserDog"] as? String
+                            self.currentUser.photoURL = snapshotValue["photoURL"] as? String                                                    
                             
-                            self.allUsersArray.append(user)
+                            
+                        } else {
+                            
+                            self.user.firstName = snapshotValue["firstname"] as? String
+                            self.user.lastName = snapshotValue["lastname"] as? String
+                            self.user.email = snapshotValue["email"] as? String
+                            self.user.uid = snapshotValue["userID"] as? String
+                            self.user.aboutUser = snapshotValue["aboutUser"] as? String
+                            self.user.aboutDog = snapshotValue["aboutUserDog"] as? String
+                            self.user.photoURL = snapshotValue["photoURL"] as? String
+                            
+                            self.allUsersArray.append(self.user)
                         }
                     }
                 }
@@ -76,8 +82,12 @@ class MainViewController: UIViewController {
         // Visar info om användare på index 0
         if allUsersArray.isEmpty == true {
             infoLabel.text = "Inga mer användare inom räckhåll"
+            //TODO: - Sätta en default bild när inga användare finns kvar i arrayen
         } else {
+            let url = URL(string: allUsersArray[0].photoURL ?? "No pic")
             infoLabel.text = allUsersArray[0].aboutUser
+            imageView.kf.setImage(with: url)
+            print(allUsersArray)
         }
     }
     
@@ -184,7 +194,6 @@ class MainViewController: UIViewController {
     
     func checkIfUserIsFriends () {
         
-        //TODO: - Gör en optional binding på currentuser om den är inloogad ????
         db.collection("users").document(currentUID!).getDocument { (snapshot, error) in
             if error != nil {
                 print("Something went wrong checking if user is friends \(error!)")
@@ -230,9 +239,23 @@ class MainViewController: UIViewController {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
         
-        let userTVC = segue.destination as? UsersTableViewController
-        userTVC?.currentUser = currentUser
+        if let userTVC = segue.destination as? UsersTableViewController{
+            userTVC.currentUser = currentUser
+        }
         
+        if let profileVC = segue.destination as? ProfileViewController {
+            profileVC.delegate = self
+            profileVC.currentUser = currentUser
+            
+        }
+    }
+    
+    //MARK: - Delegate method
+    func passBack(_ currentUser: Users) {
+        print("Här är passback metoden")
+        self.currentUser = currentUser
+        print(currentUser)
+        loadViewWithInformation()
     }
     
 

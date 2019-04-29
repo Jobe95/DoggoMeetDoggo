@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import Kingfisher
 
 class UsersTableViewController: UITableViewController {
     
@@ -23,17 +24,12 @@ class UsersTableViewController: UITableViewController {
         super.viewDidLoad()
         
         loadFriendsForUser()
- 
         
+        print(friendsArray)
+ 
         navigationItem.title = "Meddelanden"
         
         tableView.rowHeight = 80.0
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
     
     
@@ -66,16 +62,14 @@ class UsersTableViewController: UITableViewController {
                         user.uid = document["userID"] as? String
                         user.aboutUser = document["aboutUser"] as? String
                         user.aboutDog = document["aboutUserDog"] as? String
+                        user.photoURL = document["photoURL"] as? String
                         
                         self.loadFriendsArray.append(user)
                         self.tableView.reloadData()
                     }
                 }
-                
             }
-            
         }
-
     }
     
 
@@ -100,19 +94,19 @@ class UsersTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! UsersTableViewCell
         
+        
+        
         if loadFriendsArray.isEmpty == true {
             cell.nameLabel.text = "Inga vänner än"
             cell.messageLabel.text = "Matcha med användare för att skriva med dem"
         } else {
+            let url = URL(string: loadFriendsArray[indexPath.row].photoURL ?? "No pic")
             cell.nameLabel.text = loadFriendsArray[indexPath.row].firstName
             cell.messageLabel.text = "Jag vill gå ut och gå med våra hundar"
-            cell.profilImageView.image = UIImage(named: "lerone-pieters-1395409-unsplash")
+            cell.profilImageView.kf.setImage(with: url)
             
             return cell
         }
-        
-        
-
         // Configure the cell...
 
         return cell

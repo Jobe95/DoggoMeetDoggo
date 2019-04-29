@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 struct Users {
     var firstName: String?
@@ -16,4 +17,5 @@ struct Users {
     var aboutUser: String?
     var dogName: String?
     var aboutDog: String?
+    var photoURL: String?
 }

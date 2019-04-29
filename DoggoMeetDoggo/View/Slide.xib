@@ -42,7 +42,7 @@
                 <outlet property="infoTextlabel" destination="Lxx-q5-kSN" id="2jN-0q-QFU"/>
                 <outlet property="titleLabel" destination="kv9-hj-DOZ" id="KcM-ez-tt3"/>
             </connections>
-            <point key="canvasLocation" x="138.40000000000001" y="145.27736131934034"/>
+            <point key="canvasLocation" x="137" y="125"/>
         </view>
     </objects>
     <resources>

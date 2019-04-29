@@ -8,6 +8,8 @@
 
 import UIKit
 import Firebase
+import ChameleonFramework
+import Kingfisher
 
 class ChatViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
 
@@ -21,6 +23,8 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     var currentUser = Users()
     var otherUser = Users()
     
+    var oURL: URL?
+    
     var messageArray = [Message]()
     
     
@@ -28,14 +32,21 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
+        oURL = URL(string: otherUser.photoURL ?? "No pic")
+        
+        
         messageTableView.delegate = self
         messageTableView.dataSource = self
         
         messageTextField.delegate = self
         
-        //TODO: Set the tapGesture here:
+        // Set the tapGesture here:
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tableViewTapped))
         messageTableView.addGestureRecognizer(tapGesture)
+        
+        
+        //TODO: Register your MessageCell.xib file here:
+        messageTableView.register(UINib(nibName: "MessageCell", bundle: nil), forCellReuseIdentifier: "MessageCell")
         
         
         configureTableView()
@@ -57,37 +68,47 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MessageCell", for: indexPath) as! ChatTableViewCell
         
-        cell.usernameLabel.text = messageArray[indexPath.row].sender
-        cell.messageLabel.text = messageArray[indexPath.row].messageText
+        cell.senderLabel.text = messageArray[indexPath.row].sender
+        cell.messageTextLabel.text = messageArray[indexPath.row].messageText
         
-        if cell.usernameLabel.text == currentUser.firstName {
-            cell.profilImageView.backgroundColor = #colorLiteral(red: 0, green: 0.9810667634, blue: 0.5736914277, alpha: 1)
-            cell.messageContainerView.backgroundColor = #colorLiteral(red: 0.01680417731, green: 0.1983509958, blue: 1, alpha: 1)
+        if cell.senderLabel.text == currentUser.firstName {
+            cell.messageView.isHidden = true
+            cell.profilImageView.isHidden = true
+            cell.currentUserMessageView.isHidden = false
+            
+            cell.currentUserMessageTextLabel.text = messageArray[indexPath.row].messageText
+            cell.currentUserSenderLabel.text = messageArray[indexPath.row].sender
+            cell.currentUserMessageView.backgroundColor = UIColor .flatSkyBlue
         } else {
-            cell.profilImageView.backgroundColor = #colorLiteral(red: 0, green: 0.5690457821, blue: 0.5746168494, alpha: 1)
-            cell.messageContainerView.backgroundColor = #colorLiteral(red: 0.6642242074, green: 0.6642400622, blue: 0.6642315388, alpha: 1)
+            cell.currentUserMessageView.isHidden = true
+            cell.messageView.isHidden = false
+            cell.profilImageView.isHidden = false
+            
+            cell.profilImageView.backgroundColor = UIColor .flatWatermelon
+            cell.profilImageView.kf.setImage(with: oURL)
+            cell.messageView.backgroundColor = UIColor .flatGray
         }
         
         return cell
     }
     
     
-    //TODO: Declare tableViewTapped here:
+    // Declare tableViewTapped here:
     @objc func tableViewTapped() {
         messageTextField.endEditing(true)
     }
     
-    //TODO: Declare configureTableView here:
+    //TODO: - Fixa så messageTableView.rowHeight ökar om man skriver ett väldigt långt meddelande
+    // Declare configureTableView here:
     func configureTableView() {
-//        messageTableView.rowHeight = UITableView.automaticDimension
-//        messageTableView.estimatedRowHeight = 120.0
-        messageTableView.rowHeight = 80.0
+        messageTableView.rowHeight = UITableView.automaticDimension
+        messageTableView.estimatedRowHeight = 120.0
     }
     
     
     //MARK: - TextField Delegate Methods
     
-    //TODO: Declare textFieldDidBeginEditing here:
+    // Declare textFieldDidBeginEditing here:
     func textFieldDidBeginEditing(_ textField: UITextField) {
         
         UIView.animate(withDuration: 0.2){
@@ -96,7 +117,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
     
-    //TODO: Declare textFieldDidEndEditing here:
+    // Declare textFieldDidEndEditing here:
     func textFieldDidEndEditing(_ textField: UITextField) {
         
         UIView.animate(withDuration: 0.2) {
@@ -105,26 +126,25 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
     
-    func setOneToOneChat(uid1: String, uid2: String) -> String {
+    func setOneToOneChat(currentUserId: String, otherUserId: String) -> String {
         //Check if user1’s id is less than user2's
-        if uid1 < uid2 {
-            return uid1+uid2;
+        if currentUserId < otherUserId {
+            return currentUserId+otherUserId;
         }
         else{
-            return uid2+uid1;
+            return otherUserId+currentUserId;
         }
     }
     
     @IBAction func sendButtonpressed(_ sender: UIButton) {
+        // Send the message to Firebase and save it in DB
         
         messageTextField.endEditing(true)
-        //TODO: Send the message to Firebase and save it in our database
         messageTextField.isEnabled = false
         sendButtonOutlet.isEnabled = false
         
-        let chatRoomId = setOneToOneChat(uid1: currentUser.uid!, uid2: otherUser.uid!)
+        let chatRoomId = setOneToOneChat(currentUserId: currentUser.uid!, otherUserId: otherUser.uid!)
         print(chatRoomId)
-        
         
         let messageDictionary = ["messageBody": messageTextField.text!,
                                  "sender": currentUser.firstName!,
@@ -148,7 +168,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     //TODO: Create retrieve message method here
     
     func retrieveMessage() {
-        let chatRoomId = setOneToOneChat(uid1: currentUser.uid!, uid2: otherUser.uid!)
+        let chatRoomId = setOneToOneChat(currentUserId: currentUser.uid!, otherUserId: otherUser.uid!)
         
         let messageDB = db.collection("chatRooms").document(chatRoomId).collection("Messages").order(by: "messageCreated", descending: false)
         
@@ -156,11 +176,13 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             
             snapshot?.documentChanges.forEach { diff in
                 if (diff.type == .added) {
-                    print("New city: \(diff.document.data())")
-                    
-                    var snapshotValue = diff.document.data() as? [String : Any]
-                    let text = snapshotValue!["messageBody"]
-                    let sender = snapshotValue!["sender"]
+                    //print("New Data added: \(diff.document.data())")
+                    guard let snapshotValue = diff.document.data() as? [String : Any] else {
+                        print("No data in document")
+                        return
+                    }
+                    let text = snapshotValue["messageBody"]
+                    let sender = snapshotValue["sender"]
                     var message = Message()
                     
                     message.messageText = text as! String

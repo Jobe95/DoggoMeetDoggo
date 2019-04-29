@@ -9,13 +9,19 @@
 import UIKit
 
 class ChatTableViewCell: UITableViewCell {
+   
     
     @IBOutlet weak var profilImageView: UIImageView!
     
-    @IBOutlet weak var usernameLabel: UILabel!
-    @IBOutlet weak var messageLabel: UILabel!
+    @IBOutlet weak var messageView: UIView!
     
-    @IBOutlet weak var messageContainerView: UIView!
+    @IBOutlet weak var senderLabel: UILabel!
+    @IBOutlet weak var messageTextLabel: UILabel!
+    
+    
+    @IBOutlet weak var currentUserMessageView: UIView!
+    @IBOutlet weak var currentUserSenderLabel: UILabel!
+    @IBOutlet weak var currentUserMessageTextLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
