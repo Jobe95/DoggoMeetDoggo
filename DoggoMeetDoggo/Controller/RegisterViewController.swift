@@ -27,10 +27,8 @@ class RegisterViewController: UIViewController, UINavigationControllerDelegate, 
     }
     
     
-    func createNewUser(url: String?) {
+    func createNewUser(url: String?, imageRef: String?) {
         
-        
-
         Auth.auth().createUser(withEmail: emailTextField.text!, password: passwordTextField.text!) { user, error in
             
             if error != nil {
@@ -47,7 +45,8 @@ class RegisterViewController: UIViewController, UINavigationControllerDelegate, 
                     "lastname": self.lastNameTextField.text!,
                     "userID": uid!,
                     "email": self.emailTextField.text!,
-                    "photoURL": url ?? "No url"
+                    "photoURL": url ?? "No url",
+                    "imageRef": imageRef ?? "No imageRef"
                 ]) { err in
                     if let err = err {
                         print("Error writing document: \(err)")
@@ -69,14 +68,14 @@ class RegisterViewController: UIViewController, UINavigationControllerDelegate, 
         let storageRef = self.storage.reference().child("profile_images").child("\(imageName).png")
         
         guard let imageData = selectedImage?.pngData() else {
-            self.createNewUser(url: "No picture added")
+            self.createNewUser(url: "No picture added", imageRef: imageName)
             return
         }
         
         storageRef.putData(imageData, metadata: nil) { metadata, error in
             if error != nil {
                 print("Something went wrong")
-                print(error)
+                print(error!)
             } else {
                 storageRef.downloadURL(completion: { (url, error) in
                     
@@ -84,7 +83,7 @@ class RegisterViewController: UIViewController, UINavigationControllerDelegate, 
                     print("Printar urlllll")
                     print(profileImageURL!)
                     
-                    self.createNewUser(url: profileImageURL!)
+                    self.createNewUser(url: profileImageURL!, imageRef: imageName)
                 })
             }
         }

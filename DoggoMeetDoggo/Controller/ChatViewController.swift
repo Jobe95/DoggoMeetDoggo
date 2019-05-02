@@ -34,7 +34,6 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         oURL = URL(string: otherUser.photoURL ?? "No pic")
         
-        
         messageTableView.delegate = self
         messageTableView.dataSource = self
         
@@ -44,17 +43,31 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tableViewTapped))
         messageTableView.addGestureRecognizer(tapGesture)
         
-        
-        //TODO: Register your MessageCell.xib file here:
+        // Register MessageCell.xib file
         messageTableView.register(UINib(nibName: "MessageCell", bundle: nil), forCellReuseIdentifier: "MessageCell")
-        
         
         configureTableView()
         retrieveMessage()
         
         messageTableView.separatorStyle = .none
         
+        // Set observer on keyboard
+        NotificationCenter.default.addObserver(self, selector: #selector(keybordWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         
+        
+    }
+    //Ökar constraint ifall tangentbordet syns
+    @objc func keybordWillShow(notification:NSNotification) {
+        if let info = notification.userInfo {
+            let rect: CGRect = info["UIKeyboardFrameEndUserInfoKey"] as! CGRect
+            
+            self.view.layoutIfNeeded()
+            
+            UIView.animate(withDuration: 0.25, animations: {
+                self.view.layoutIfNeeded()
+                self.heightConstraint.constant = rect.height + 20
+            })
+        }
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -98,26 +111,14 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         messageTextField.endEditing(true)
     }
     
-    //TODO: - Fixa så messageTableView.rowHeight ökar om man skriver ett väldigt långt meddelande
     // Declare configureTableView here:
     func configureTableView() {
         messageTableView.rowHeight = UITableView.automaticDimension
         messageTableView.estimatedRowHeight = 120.0
     }
     
-    
     //MARK: - TextField Delegate Methods
     
-    // Declare textFieldDidBeginEditing here:
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        
-        UIView.animate(withDuration: 0.2){
-            self.heightConstraint.constant = 267
-            self.view.layoutIfNeeded()
-        }
-    }
-    
-    // Declare textFieldDidEndEditing here:
     func textFieldDidEndEditing(_ textField: UITextField) {
         
         UIView.animate(withDuration: 0.2) {
@@ -138,34 +139,37 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBAction func sendButtonpressed(_ sender: UIButton) {
         // Send the message to Firebase and save it in DB
-        
-        messageTextField.endEditing(true)
-        messageTextField.isEnabled = false
-        sendButtonOutlet.isEnabled = false
-        
-        let chatRoomId = setOneToOneChat(currentUserId: currentUser.uid!, otherUserId: otherUser.uid!)
-        print(chatRoomId)
-        
-        let messageDictionary = ["messageBody": messageTextField.text!,
-                                 "sender": currentUser.firstName!,
-                                 "messageCreated": Date()] as [String : Any]
-        
-        let chatRef = db.collection("chatRooms").document(chatRoomId).collection("Messages")
+        if messageTextField.text == "" {
+            return
+        } else {
+            messageTextField.endEditing(true)
+            messageTextField.isEnabled = false
+            sendButtonOutlet.isEnabled = false
             
-        chatRef.addDocument(data: messageDictionary ) {
-            (error) in
-            if error != nil {
-                print("Something went wrong")
-            } else {
-                print("Success saved message to DB")
-                self.messageTextField.isEnabled = true
-                self.sendButtonOutlet.isEnabled = true
-                self.messageTextField.text = ""
+            let chatRoomId = setOneToOneChat(currentUserId: currentUser.uid!, otherUserId: otherUser.uid!)
+            print(chatRoomId)
+            
+            let messageDictionary = ["messageBody": messageTextField.text!,
+                                     "sender": currentUser.firstName!,
+                                     "messageCreated": Date()] as [String : Any]
+            
+            let chatRef = db.collection("chatRooms").document(chatRoomId).collection("Messages")
+            
+            chatRef.addDocument(data: messageDictionary ) {
+                (error) in
+                if error != nil {
+                    print("Something went wrong")
+                } else {
+                    print("Success saved message to DB")
+                    self.messageTextField.isEnabled = true
+                    self.sendButtonOutlet.isEnabled = true
+                    self.messageTextField.text = ""
+                }
             }
         }
     }
     
-    //TODO: Create retrieve message method here
+    // Retrieve message method here
     
     func retrieveMessage() {
         let chatRoomId = setOneToOneChat(currentUserId: currentUser.uid!, otherUserId: otherUser.uid!)

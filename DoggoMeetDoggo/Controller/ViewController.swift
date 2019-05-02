@@ -44,8 +44,10 @@ class ViewController: UIViewController {
 //    }
     
     @IBAction func loginButtonPressed(_ sender: UIButton) {
+        performSegue(withIdentifier: "goToLogin", sender: self)
     }
     @IBAction func registerButtonpressed(_ sender: UIButton) {
+        performSegue(withIdentifier: "goToRegister", sender: self)
     }
     
 

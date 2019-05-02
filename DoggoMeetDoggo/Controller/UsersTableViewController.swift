@@ -19,6 +19,8 @@ class UsersTableViewController: UITableViewController {
     
     var currentUser = Users()
     var userToChat = Users()
+    
+    var selectedCell: Int!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +32,14 @@ class UsersTableViewController: UITableViewController {
         navigationItem.title = "Meddelanden"
         
         tableView.rowHeight = 80.0
+        
+        
+    }
+    
+    @objc func viewTapped(_ sender: UITapGestureRecognizer) {
+        
+        selectedCell = sender.view!.tag
+        performSegue(withIdentifier: "goToProfileForUser", sender: self)
     }
     
     
@@ -94,21 +104,24 @@ class UsersTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! UsersTableViewCell
         
-        
-        
+
         if loadFriendsArray.isEmpty == true {
             cell.nameLabel.text = "Inga vänner än"
-            cell.messageLabel.text = "Matcha med användare för att skriva med dem"
         } else {
+            
+            //TODO: - Make a tap recognizer on imageView and make performSegue
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(viewTapped(_:)))
+            cell.profilImageView.isUserInteractionEnabled = true
+            
             let url = URL(string: loadFriendsArray[indexPath.row].photoURL ?? "No pic")
-            cell.nameLabel.text = loadFriendsArray[indexPath.row].firstName
-            cell.messageLabel.text = "Jag vill gå ut och gå med våra hundar"
+            cell.nameLabel.text = "\(loadFriendsArray[indexPath.row].firstName ?? "Förnamn") \(loadFriendsArray[indexPath.row].lastName ?? "Efternamn")"
             cell.profilImageView.kf.setImage(with: url)
+            cell.profilImageView.tag = indexPath.row
+            
+            cell.profilImageView.addGestureRecognizer(tapGesture)
             
             return cell
         }
-        // Configure the cell...
-
         return cell
     }
     
@@ -128,53 +141,20 @@ class UsersTableViewController: UITableViewController {
      // Get the new view controller using segue.destination.
      // Pass the selected object to the new view controller.
         
-        //TODO: - Skicka med currentuser och user från indexpath.row till en array av users.
-        
         let chatVC = segue.destination as? ChatViewController
         chatVC?.otherUser = userToChat
         chatVC?.currentUser = currentUser
         
+//        let otherPVC = segue.destination as? OtherUserProfileViewController
+//        otherPVC?.user = userToChat
         
         
+        if segue.identifier == "goToProfileForUser" {
+            let otherPVC: OtherUserProfileViewController = segue.destination as! OtherUserProfileViewController
+           otherPVC.user = loadFriendsArray[selectedCell]
+        }
         
      }
     
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-
 
 }

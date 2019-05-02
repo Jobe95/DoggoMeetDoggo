@@ -24,18 +24,33 @@ class MainViewController: UIViewController, ProfileViewControllerDelegate {
     
     var currentUser = Users()
     var user = Users()
+    var otherUser = Users()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.title = "Hitta vänner"
         
         checkIfUserIsFriends()
         loadAllUsersFromDB()
         
+        // Make a tap recognizer on imageView and make performSegue
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(viewTapped))
+        imageView.addGestureRecognizer(tapGesture)
+        imageView.isUserInteractionEnabled = true
 
         // Do any additional setup after loading the view.
     }
+    
+    @objc func viewTapped() {
+        
+        if allUsersArray.isEmpty {
+            return
+        } else {
+            otherUser = allUsersArray[0]
+            performSegue(withIdentifier: "goToProfileForUser", sender: self)
+        }
+    }
+    
     
     //MARK: - Load Methods
     func loadAllUsersFromDB() {
@@ -55,11 +70,10 @@ class MainViewController: UIViewController, ProfileViewControllerDelegate {
                             self.currentUser.uid = snapshotValue["userID"] as? String
                             self.currentUser.aboutUser = snapshotValue["aboutUser"] as? String
                             self.currentUser.aboutDog = snapshotValue["aboutUserDog"] as? String
-                            self.currentUser.photoURL = snapshotValue["photoURL"] as? String                                                    
-                            
+                            self.currentUser.photoURL = snapshotValue["photoURL"] as? String
+                            self.currentUser.imageRef = snapshotValue["imageRef"] as? String
                             
                         } else {
-                            
                             self.user.firstName = snapshotValue["firstname"] as? String
                             self.user.lastName = snapshotValue["lastname"] as? String
                             self.user.email = snapshotValue["email"] as? String
@@ -67,6 +81,7 @@ class MainViewController: UIViewController, ProfileViewControllerDelegate {
                             self.user.aboutUser = snapshotValue["aboutUser"] as? String
                             self.user.aboutDog = snapshotValue["aboutUserDog"] as? String
                             self.user.photoURL = snapshotValue["photoURL"] as? String
+                            self.user.imageRef = snapshotValue["imageRef"] as? String
                             
                             self.allUsersArray.append(self.user)
                         }
@@ -82,12 +97,14 @@ class MainViewController: UIViewController, ProfileViewControllerDelegate {
         // Visar info om användare på index 0
         if allUsersArray.isEmpty == true {
             infoLabel.text = "Inga mer användare inom räckhåll"
+            navigationItem.title = "Hitta vänner"
             //TODO: - Sätta en default bild när inga användare finns kvar i arrayen
         } else {
             let url = URL(string: allUsersArray[0].photoURL ?? "No pic")
-            infoLabel.text = allUsersArray[0].aboutUser
+            infoLabel.text = allUsersArray[0].aboutUser ?? "Användaren har inte skrivit någon information"
             imageView.kf.setImage(with: url)
-            print(allUsersArray)
+            navigationItem.title = "\(allUsersArray[0].firstName!) \(allUsersArray[0].lastName!)"
+            //print(allUsersArray)
         }
     }
     
@@ -146,11 +163,15 @@ class MainViewController: UIViewController, ProfileViewControllerDelegate {
             if let document = snapshot {
                 let friendsArray = document["friends"] as? Array ?? [""]
                 let noFriendsArray = document["noFriends"] as? Array ?? [""]
+                let friendRequestSentArray = document["friendRequestSent"] as? Array ?? [""]
                 
                 for i in friendsArray {
                     self.currentUserArray.append(i)
                 }
                 for i in noFriendsArray {
+                    self.currentUserArray.append(i)
+                }
+                for i in friendRequestSentArray {
                     self.currentUserArray.append(i)
                 }
                 
@@ -246,7 +267,9 @@ class MainViewController: UIViewController, ProfileViewControllerDelegate {
         if let profileVC = segue.destination as? ProfileViewController {
             profileVC.delegate = self
             profileVC.currentUser = currentUser
-            
+        }
+        if let otherProfileVC = segue.destination as? OtherUserProfileViewController {
+            otherProfileVC.user = otherUser
         }
     }
     

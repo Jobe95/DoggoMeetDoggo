@@ -32,9 +32,6 @@ class SlideViewController: UIViewController, UIScrollViewDelegate {
         pageControll.currentPage = 0
         pageControll.currentPageIndicatorTintColor = UIColor.white
         view.bringSubviewToFront(pageControll)
-        
-
-        // Do any additional setup after loading the view.
     }
     
     func createSlides () -> [SlideView] {

@@ -13,7 +13,6 @@ class UsersTableViewCell: UITableViewCell {
     @IBOutlet weak var profilImageView: UIImageView!
     
     @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var messageLabel: UILabel!
     
 
     override func awakeFromNib() {
@@ -24,7 +23,14 @@ class UsersTableViewCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
-        // Configure the view for the selected state
+        
+        
+        profilImageView.layer.cornerRadius = profilImageView.frame.size.width / 2
+        profilImageView.clipsToBounds = true
+    }
+    
+    @objc func viewTapped() {
+        
     }
 
 }

@@ -27,6 +27,7 @@
 		5CB876052267613600B27569 /* ChatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB876042267613600B27569 /* ChatTableViewCell.swift */; };
 		5CB876072267637800B27569 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB876062267637800B27569 /* Message.swift */; };
 		5CB8760B2268806200B27569 /* MessageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5CB8760A2268806200B27569 /* MessageCell.xib */; };
+		5CB8762D22787AF600B27569 /* OtherUserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB8762C22787AF600B27569 /* OtherUserProfileViewController.swift */; };
 		5FC7FB51C9F85E6E6C76EA4E /* Pods_DoggoMeetDoggo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89422D8FFD8AEBF27D36B040 /* Pods_DoggoMeetDoggo.framework */; };
 /* End PBXBuildFile section */
 
@@ -54,6 +55,7 @@
 		5CB876042267613600B27569 /* ChatTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatTableViewCell.swift; sourceTree = "<group>"; };
 		5CB876062267637800B27569 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		5CB8760A2268806200B27569 /* MessageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessageCell.xib; sourceTree = "<group>"; };
+		5CB8762C22787AF600B27569 /* OtherUserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherUserProfileViewController.swift; sourceTree = "<group>"; };
 		747894065D76C7758187D1EB /* Pods-DoggoMeetDoggo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DoggoMeetDoggo.release.xcconfig"; path = "Target Support Files/Pods-DoggoMeetDoggo/Pods-DoggoMeetDoggo.release.xcconfig"; sourceTree = "<group>"; };
 		89422D8FFD8AEBF27D36B040 /* Pods_DoggoMeetDoggo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DoggoMeetDoggo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -124,6 +126,7 @@
 				5CB875D7225E415E00B27569 /* MainViewController.swift */,
 				5CB875D9225E44BB00B27569 /* ProfileViewController.swift */,
 				5CB876012267610200B27569 /* ChatViewController.swift */,
+				5CB8762C22787AF600B27569 /* OtherUserProfileViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -311,6 +314,7 @@
 				5CB875DA225E44BB00B27569 /* ProfileViewController.swift in Sources */,
 				5CB875C8225E22BE00B27569 /* LoginViewController.swift in Sources */,
 				5CB875CC225E248100B27569 /* SlideViewController.swift in Sources */,
+				5CB8762D22787AF600B27569 /* OtherUserProfileViewController.swift in Sources */,
 				5CB875B5225E1B5200B27569 /* ViewController.swift in Sources */,
 				5CB875B3225E1B5200B27569 /* AppDelegate.swift in Sources */,
 				5CB875D8225E415E00B27569 /* MainViewController.swift in Sources */,

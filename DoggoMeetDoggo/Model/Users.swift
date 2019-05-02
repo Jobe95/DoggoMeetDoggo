@@ -18,4 +18,5 @@ struct Users {
     var dogName: String?
     var aboutDog: String?
     var photoURL: String?
+    var imageRef: String?
 }

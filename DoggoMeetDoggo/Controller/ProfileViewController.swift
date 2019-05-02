@@ -14,7 +14,7 @@ protocol ProfileViewControllerDelegate: AnyObject {
     func passBack(_ currentUser: Users)
 }
 
-class ProfileViewController: UIViewController, UITextViewDelegate {
+class ProfileViewController: UIViewController, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     @IBOutlet var backgroundView: UIView!
     
@@ -35,6 +35,8 @@ class ProfileViewController: UIViewController, UITextViewDelegate {
     var currentUser: Users?
     weak var delegate: ProfileViewControllerDelegate?
     
+    var selectedImage: UIImage?
+    let storage = Storage.storage()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,30 +53,106 @@ class ProfileViewController: UIViewController, UITextViewDelegate {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(viewTapped))
         backgroundView.addGestureRecognizer(tapGesture)
         
+        let tapGestureOnImage = UITapGestureRecognizer(target: self, action: #selector(imageViewTapped))
+        profileImageView.addGestureRecognizer(tapGestureOnImage)
+        
+        profileImageView.isUserInteractionEnabled = true
+        
+        profileImageView.layer.cornerRadius = 8.0
+        profileImageView.clipsToBounds = true
+        
         aboutUserTextView.delegate = self
         aboutDogTextView.delegate = self
 
         // Do any additional setup after loading the view.
     }
     
+    //MARK: - Storage Methods
+    func uploadImageToDB() {
+        
+        var profileImageURL: String?
+        
+        let imageName = NSUUID().uuidString
+        let storageRef = self.storage.reference().child("profile_images").child("\(imageName).png")
+        
+        guard let imageData = selectedImage?.pngData() else {
+            print("No picture")
+            return
+        }
+        storageRef.putData(imageData, metadata: nil) { metadata, error in
+            if error != nil {
+                print("Something went wrong")
+                print(error!)
+            } else {
+                storageRef.downloadURL(completion: { (url, error) in
+                    
+                    profileImageURL = url?.absoluteString
+                    print("Printar urlllll")
+                    print(profileImageURL!)
+                    
+                    let userRef = self.db.collection("users").document(self.currentUID!)
+                    userRef.updateData([
+                        "photoURL":profileImageURL ?? "No URL",
+                        "imageRef": imageName
+                        ], completion: { (error) in
+                        if error != nil {
+                            print("Something went wrong")
+                        } else {
+                            print("Image Updated successfully to DB")
+                            self.currentUser?.photoURL = profileImageURL
+                            self.currentUser?.imageRef = imageName
+                            self.loadLabels()
+                        }
+                    })
+                })
+            }
+        }
+    }
+    
+    func deleteImageFromDB() {
+        // Create a reference to the file to delete
+        let desertRef = storage.reference().child("profile_images").child("\(currentUser?.imageRef ?? "no image").png")
+        
+        // Delete the file
+        desertRef.delete { error in
+            if error != nil {
+                // Uh-oh, an error occurred!
+            } else {
+                // File deleted successfully
+                print("Deleted image")
+            }
+        }
+    }
+
     // Declare tableViewTapped here:
     @objc func viewTapped() {
+        print("View tapped")
         aboutUserTextView.endEditing(true)
         aboutDogTextView.endEditing(true)
         loadLabels()
     }
+    @objc func imageViewTapped() {
+        print("ImageView Tapped")
+        let imagePicker = UIImagePickerController()
+        
+        imagePicker.delegate = self
+        imagePicker.allowsEditing = true
+        
+        present(imagePicker, animated: true, completion: nil)
+    }
     
     func loadLabels() {
         print("Printar user")
-        print(currentUser)
+        print(currentUser!)
         
         let url = URL(string: currentUser?.photoURL ?? "No pic")
         
         userNameLabel.text = "\(currentUser?.firstName ?? "Förnamn") \(currentUser?.lastName ?? "Efternamn")"
-        aboutUserLabel.text = "Om \(currentUser?.firstName ?? "Användarnamn")"
+        aboutUserLabel.text = "Om dig själv"
         aboutUserTextView.text = "\(currentUser?.aboutUser ?? "Info om dig själv")"
         aboutDogTextView.text = "\(currentUser?.aboutDog ?? "Info om din/dina hundar")"
         profileImageView.kf.setImage(with: url)
+        delegate?.passBack(currentUser!)
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
@@ -95,7 +173,6 @@ class ProfileViewController: UIViewController, UITextViewDelegate {
                 print("Document successfully updated")
             }
         }
-        delegate?.passBack(currentUser!)
         loadLabels()
     }
     
@@ -111,7 +188,30 @@ class ProfileViewController: UIViewController, UITextViewDelegate {
         
     }
     
-    //MARK: - Delegate methods
+    //MARK: - ImagePicker Methods
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        print("Did cancel")
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        
+        if let editedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
+            selectedImage = editedImage
+        }
+        else if let originalImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            selectedImage = originalImage
+        }
+        guard selectedImage != nil else {
+            print("No selected image")
+            return
+        }
+        dismiss(animated: true, completion: nil)
+        deleteImageFromDB()
+        uploadImageToDB()
+        
+    }
     
     
     
