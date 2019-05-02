@@ -32,8 +32,6 @@ class UsersTableViewController: UITableViewController {
         navigationItem.title = "Meddelanden"
         
         tableView.rowHeight = 80.0
-        
-        
     }
     
     @objc func viewTapped(_ sender: UITapGestureRecognizer) {
@@ -103,8 +101,7 @@ class UsersTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! UsersTableViewCell
-        
-
+ 
         if loadFriendsArray.isEmpty == true {
             cell.nameLabel.text = "Inga vänner än"
         } else {
